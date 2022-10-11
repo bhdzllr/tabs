@@ -1,0 +1,19 @@
+{
+  "name": "@bhdzllr/tabs",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Tabs web component - accessible and styleable",
+  "keywords": [
+    "tabs",
+    "component",
+    "web components"
+  ],
+  "repository": "https://github.com/bhdzllr/tabs",
+  "homepage": "https://github.com/bhdzllr/tabs#readme",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "bhdzllr",
+  "license": "MIT"
+}
