@@ -8,12 +8,19 @@
     "component",
     "web components"
   ],
-  "repository": "https://github.com/bhdzllr/tabs",
+  "author": "bhdzllr",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bhdzllr/tabs.git"
+  },
   "homepage": "https://github.com/bhdzllr/tabs#readme",
+  "engines": {
+    "node": "16",
+    "npm": "8"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "bhdzllr",
-  "license": "MIT"
+  }
 }
