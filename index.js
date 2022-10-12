@@ -53,20 +53,12 @@ export class Tabs extends HTMLElement {
 		if (!this.hasAttribute('wa-aria-label') && !this.hasAttribute('aria-labelledby')) console.warn('[Tabs] No "wa-aria-label" or "aria-labelledby" attribute set to use for "aria-label".');
 
 		if (this.hasAttribute('wa-aria-label')) this.tabList.setAttribute('aria-label', this.getAttribute('wa-aria-label'));
-	
+
 		this.onSlotChangeHandler = this.onSlotChange.bind(this);
 		this.onKeyDownHandler = this.onKeyDown.bind(this);
 
 		this.tabsSlot.addEventListener('slotchange', this.onSlotChangeHandler);
 		this.tabPanelsSlot.addEventListener('slotchange', this.onSlotChangeHandler);
-
-		for (const [i, tab] of this.getTabs().entries()) {
-			tab.hidden = false;
-			tab.addEventListener('click', (e) => {
-				e.preventDefault();
-				e.target.setAttribute('selected', '');
-			});
-		}
 
 		this.addEventListener('keydown', this.onKeyDownHandler);
 
@@ -80,6 +72,8 @@ export class Tabs extends HTMLElement {
 	}
 
 	onSlotChange(e) {
+		this.stopSelectedObserver();
+
 		const tabs = this.getTabs();
 		const tabPanels = this.getTabPanels();
 		let isATabSelected = false;
@@ -88,12 +82,14 @@ export class Tabs extends HTMLElement {
 			let isTabSelected = tab.hasAttribute('selected') ? true : false;
 			let tabId = tab.id ? tab.id : 'bhdzllr-tabs-tab-' + i;
 
+			tab.hidden = false;
 			tab.setAttribute('id', tabId);
 			tab.setAttribute('role', 'tab');
 			tab.setAttribute('aria-selected', `${isTabSelected}`);
 			if (!tab.hasAttribute('aria-controls')) tab.setAttribute('aria-controls', 'bhdzllr-tabs-panel-' + i);
 			tab.setAttribute('tabindex', `${isTabSelected ? '0' : '-1'}`);
 			tab.dataset.index = i;
+			tab.addEventListener('click', this.onTabClick);
 
 			if (isTabSelected) isATabSelected = true;
 
@@ -110,10 +106,11 @@ export class Tabs extends HTMLElement {
 			tabPanel.hidden = !isTabSelected;
 		}
 
-		
 		if (!isATabSelected) {
 			this.selectTab(0, false);
 		}
+
+		this.startSelectedObserver();
 	}
 
 	onKeyDown(e) {
@@ -140,7 +137,7 @@ export class Tabs extends HTMLElement {
 				break;
 			case KEYCODE.HOME:
 				break;
-			case KEYCODE.END: 
+			case KEYCODE.END:
 				newTab = tabs.length - 1;
 			default:
 				return;
@@ -150,6 +147,11 @@ export class Tabs extends HTMLElement {
 		if (newTab > (tabs.length - 1)) newTab = 0;
 
 		this.selectTab(newTab);
+	}
+
+	onTabClick(e) {
+		e.preventDefault();
+		this.setAttribute('selected', '');
 	}
 
 	startSelectedObserver() {
