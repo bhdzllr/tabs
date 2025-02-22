@@ -40,9 +40,13 @@ export class Tabs extends HTMLElement {
 	}
 
 	connectedCallback() {
-		if (!this.hasAttribute('wa-aria-label') && !this.hasAttribute('aria-labelledby')) console.warn('[Tabs] No "wa-aria-label" or "aria-labelledby" attribute set to use for "aria-label".');
+		if (!this.hasAttribute('wa-aria-label') && !this.hasAttribute('aria-labelledby')) {
+			console.warn('[Tabs] No "wa-aria-label" or "aria-labelledby" attribute set to use for "aria-label".');
+		}
 
-		if (this.hasAttribute('wa-aria-label')) this.tabList.setAttribute('aria-label', this.getAttribute('wa-aria-label'));
+		if (this.hasAttribute('wa-aria-label')) {
+			this.tabList.setAttribute('aria-label', this.getAttribute('wa-aria-label'));
+		}
 
 		this.onSlotChangeHandler = this.onSlotChange.bind(this);
 		this.onKeyDownHandler = this.onKeyDown.bind(this);
@@ -81,7 +85,9 @@ export class Tabs extends HTMLElement {
 			tab.dataset.index = i;
 			tab.addEventListener('click', this.onTabClick);
 
-			if (isTabSelected) isATabSelected = true;
+			if (isTabSelected) {
+				isATabSelected = true;
+			}
 
 			if (!tabPanels[i]) {
 				console.warn('[Tabs] There are more tabs defined than panels.');
@@ -113,7 +119,9 @@ export class Tabs extends HTMLElement {
 		let newTab = 0;
 
 		for (const [i, tab] of tabs.entries()) {
-			if (tab.hasAttribute('selected')) currentTab = i;
+			if (tab.hasAttribute('selected')) {
+				currentTab = i;
+			}
 		}
 
 		switch (e.key) {
@@ -134,8 +142,13 @@ export class Tabs extends HTMLElement {
 				return;
 		}
 
-		if (newTab < 0) newTab = tabs.length - 1;
-		if (newTab > (tabs.length - 1)) newTab = 0;
+		if (newTab < 0) {
+			newTab = tabs.length - 1;
+		}
+
+		if (newTab > (tabs.length - 1)) {
+			newTab = 0;
+		}
 
 		this.selectTab(newTab);
 	}
@@ -167,15 +180,24 @@ export class Tabs extends HTMLElement {
 			if (i != index) {
 				tab.setAttribute('aria-selected', 'false');
 				tab.setAttribute('tabindex', '-1');
-				if (tab.hasAttribute('selected')) tab.removeAttribute('selected');
+
+				if (tab.hasAttribute('selected')) {
+					tab.removeAttribute('selected');
+				}
+
 				continue;
 			}
 
 			tab.setAttribute('aria-selected', 'true');
 			tab.setAttribute('tabindex', '0');
-			if (!tab.hasAttribute('selected')) tab.setAttribute('selected', '');
 
-			if (withFocus) tab.focus();
+			if (!tab.hasAttribute('selected')) {
+				tab.setAttribute('selected', '');
+			}
+
+			if (withFocus) {
+				tab.focus();
+			}
 		}
 
 		for (const [i, tabPanel] of tabPanels.entries()) {
