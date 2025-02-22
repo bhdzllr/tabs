@@ -209,6 +209,15 @@ export class Tabs extends HTMLElement {
 			tabPanel.hidden = false;
 		}
 
+		this.dispatchEvent(
+			new CustomEvent('bhdzllr-tabs-selected', {
+				bubbles: false,
+				detail: {
+					index: Number(index),
+				},
+			}),
+		);
+
 		this.startSelectedObserver();
 	}
 
