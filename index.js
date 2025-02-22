@@ -1,13 +1,3 @@
-const KEYCODE = {
-	TAB: 9,
-	DOWN: 40,
-	LEFT: 37,
-	RIGHT: 39,
-	UP: 38,
-	HOME: 36,
-	END: 35,
-};
-
 const template = document.createElement('template');
 template.innerHTML = `
 	<style>
@@ -115,7 +105,7 @@ export class Tabs extends HTMLElement {
 
 	onKeyDown(e) {
 		if (e.altKey) return;
-		if (e.keyCode == KEYCODE.TAB) return;
+		if (e.key === 'Tab') return;
 		if (e.target.getAttribute('role') !== 'tab') return;
 
 		const tabs = this.getTabs();
@@ -126,19 +116,20 @@ export class Tabs extends HTMLElement {
 			if (tab.hasAttribute('selected')) currentTab = i;
 		}
 
-		switch (e.keyCode) {
-			case KEYCODE.LEFT:
-			case KEYCODE.UP:
+		switch (e.key) {
+			case 'ArrowLeft':
+			case 'ArrowUp':
 				newTab = currentTab - 1;
 				break;
-			case KEYCODE.RIGHT:
-			case KEYCODE.DOWN:
+			case 'ArrowRight':
+			case 'ArrowDown':
 				newTab = currentTab + 1;
 				break;
-			case KEYCODE.HOME:
+			case 'Home':
 				break;
-			case KEYCODE.END:
+			case 'End':
 				newTab = tabs.length - 1;
+				break;
 			default:
 				return;
 		}
