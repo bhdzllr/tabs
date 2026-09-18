@@ -1,9 +1,9 @@
-# Tabs #
+# Tabs
 
 Tabs with automatic activation as web component - accessible and styleable.
 
 
-## Usage ##
+## Usage
 
 Install with
 
@@ -11,14 +11,14 @@ Install with
 npm install @bhdzllr/tabs
 ```
 
-
-## Example ##
-
 Import the component in your JS file:
 
 ```JavaScript
 import { Tabs } from '@bhdzllr/tabs';
 ```
+
+
+## Example
 
 Example with title and `aria-labelledby`:
 
